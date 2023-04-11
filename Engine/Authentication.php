@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Authentication Class
+ *
+ * @author Bitress
+ */
 class Authentication
 {
 
@@ -31,6 +36,12 @@ class Authentication
 
     }
 
+    /**
+     * Login the user
+     * @param $username
+     * @param $password
+     * @return true|void
+     */
     public function userLogin($username, $password){
 
         try {
@@ -48,16 +59,20 @@ class Authentication
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     $hashed_password = $row['password'];
-                    $user_id = $row['user_id'];
+                    $user_id = $row['id'];
 
                     if ($this->verifyPassword($password, $hashed_password)) {
                         Session::set('isLoggedIn', true);
                         Session::set('user_id', $user_id);
                         return true;
-
+                    } else {
+                        echo "The password you have entered is incorrect";
                     }
 
+                } else {
+                    echo "No user found with that username";
                 }
+
             }
 
         } catch (Exception $e) {
@@ -83,6 +98,11 @@ class Authentication
                  echo "Invalid email format";
             }
 
+            if ($password !== $confirm_password){
+                echo "Password does not match!";
+            }
+
+            // Hash the password
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 

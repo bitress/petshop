@@ -18,6 +18,14 @@ class User
     public function getData()
     {
 
+        $sql = "SELECT * FROM users WHERE users.id = :uid";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":uid", $this->user);
+        if ($stmt->execute()){
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+        
+
     }
 
     public function updateProfile()
