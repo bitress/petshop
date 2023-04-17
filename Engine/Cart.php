@@ -89,7 +89,7 @@ class Cart
 
         try {
 
-            $sql = "SELECT * FROM `cart` WHERE `product_id` = :product AND `user_id` = :uid";
+            $sql = "SELECT * FROM `cart` WHERE `product_id` = :product AND `user_id` = :uid AND status = '0'";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(":product", $product);
             $stmt->bindParam(":uid", $this->user_id);
@@ -97,7 +97,7 @@ class Cart
 
                 if ($stmt->rowCount() > 0){
 
-                    $sql = "UPDATE `cart` SET `quantity` = `quantity` + :quantity WHERE `product_id` = :product AND user_id = :uid";
+                    $sql = "UPDATE `cart` SET `quantity` = `quantity` + :quantity WHERE `product_id` = :product AND user_id = :uid AND status = '0'";
                     $stmt = $this->db->prepare($sql);
                     $stmt->bindParam(":product", $product);
                     $stmt->bindParam(":uid", $this->user_id);
@@ -143,6 +143,19 @@ class Cart
             echo "Error: ". $e->getMessage();
         }
 
+    }
+
+
+    public function checkout($cart){
+
+        $sql = "SELECT cart.product_id, cart.user_id, cart.quantity, products.*, category.* FROM cart INNER JOIN products ON products.id = cart.product_id INNER JOIN users ON users.id = cart.user_id LEFT JOIN category ON category.category_id = products.category WHERE cart.cart_id IN ($cart) AND users.id = :uid";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":uid", $this->user_id);
+        if ($stmt->execute()){
+            if ($stmt->rowCount() > 0){
+                return $stmt->fetchAll();
+            }
+        }
     }
 
 }

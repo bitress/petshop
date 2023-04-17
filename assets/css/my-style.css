@@ -1,8 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700');
 
-body {
-    overflow: scroll;
+*{
+    border-radius: 0 !important;
+    border: 0 !important;
 }
+
+body{
+    font-family: "Poppins", sans-serif !important;
+}
+
 @media (max-width: 1025px) {
     .h-custom {
         height: 100vh !important;
@@ -73,8 +79,7 @@ body {
 
 
 .bottom{
-    padding: 10px;
-    padding-top: 30px;
+    padding: 30px 10px 10px;
 }
 .add{
 
@@ -226,25 +231,6 @@ body {
     margin-right: 7px;
     float: left;
 }
-.button {
-    background: #f8770c;
-    color: white;
-    text-align: center;
-    padding: 12px;
-    text-decoration: none;
-    display: block;
-    border-radius: 3px;
-    font-size: 16px;
-    margin: 25px 0 15px 0;
-    text-transform: uppercase;
-}
-
-.button:hover {
-    background: #f87f1b;
-}
-.button i {
-    padding-left: 5px;
-}
 .clearfix:after {
     content: "";
     display: table;
@@ -252,49 +238,10 @@ body {
 }
 
 
-*{
-    border-radius: 0px !important;
-    border: 0px !important;
-}
 
-body{
-    margin: 0px;
-    font-family: "Poppins", sans-serif !important;
-}
 
 .height-vh{
     height: 100vh;
-}
-
-#comment-container{
-    padding: 40px !important;
-    background: white;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-}
-
-.date{
-    font-size: 12px;
-}
-
-.comment-text{
-    font-size: 14px;
-    line-height: 1.2rem;
-}
-
-.fs-14{
-    font-size: 14px;
-}
-
-.name{
-    color: #FE654F;
-}
-
-.cursor{
-    cursor: pointer;
-}
-
-.cursor:hover{
-    color: blue;
 }
 
 

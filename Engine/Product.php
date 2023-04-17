@@ -43,7 +43,7 @@ class Product
     }
 
     public function relatedProduct($category_id, $product_id){
-        $sql = "SELECT * FROM products LEFT JOIN category ON category.category_id = products.category WHERE category = :cat_id AND NOT id = :pid LIMIT 4";
+            $sql = "SELECT * FROM products LEFT JOIN category ON category.category_id = products.category WHERE category = :cat_id AND NOT id = :pid LIMIT 4";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':cat_id', $category_id);
         $stmt->bindParam(':pid', $product_id);

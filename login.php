@@ -44,14 +44,14 @@
                     <form method="POST" id="loginForm">
                         <div class="mb-3">
                             <label class="mb-2 text-muted" for="username">Username</label>
-                            <input id="username" type="text" class="form-control" name="username" value="" required autofocus>
+                            <input id="username" type="text" class="form-control form-control-sm" name="username" value="" required autofocus>
                         </div>
 
                         <div class="mb-3">
                             <div class="mb-2 w-100">
                                 <label class="text-muted" for="password">Password</label>
                             </div>
-                            <input id="password" type="password" class="form-control" name="password" required>
+                            <input id="password" type="password" class="form-control form-control-sm" name="password" required>
                         </div>
 
                         <div class="d-flex align-items-center">

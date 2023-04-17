@@ -1,5 +1,33 @@
 <?php
 include_once 'config/init.php';
+
+
+if (isset($_POST['continue_checkout'])){
+
+    $db = Database::getInstance();
+
+    $user = $_POST['user'];
+    $product = $_POST['checkout_products'];
+
+    $product = explode(',', $product);
+
+    foreach ($product as $p){
+        $sql = "INSERT INTO checkout (`user_id`, `cart_id`, `message`) VALUES (:uid, :cart_id, 'Your package has been confirmed!')";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(":uid", $user);
+        $stmt->bindParam(":cart_id", $p);
+        if ($stmt->execute()){
+
+            $sql = "UPDATE cart SET status = '1' WHERE cart_id = :cart_id";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":cart_id", $p);
+            if ($stmt->execute()) {
+            }
+        }
+    }
+
+    header("Location: delivery.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
@@ -44,23 +72,24 @@ include_once 'templates/navbar.php';
 
                             <?php
                             if (isset($_POST['checkout'])) {
-                                $id = $row['id'];
 
                                 $cart =  implode(',', $_POST['product']);
 
-                                $sql = "SELECT cart.product_id, cart.user_id, cart.quantity, products.*, category.* FROM cart INNER JOIN products ON products.id = cart.product_id INNER JOIN users ON users.id = cart.user_id LEFT JOIN category ON category.category_id = products.category WHERE cart.cart_id IN ($cart) AND users.id = '$id'";
-                                $result = mysqli_query($con, $sql);
+                                $cart_obj = new Cart();
+                                $cart = $cart_obj->checkout($cart);
+
+
                                 $total_price1 = 0;
-                                while ($cart = mysqli_fetch_array($result)){
-                                    $total_price1 += $cart['product_price'] * $cart['quantity'];
+                                foreach ($cart as $res) {
+                                    $total_price1 += $res['product_price'] * $res['quantity'];
 
                                     ?>
                                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                                         <div>
-                                            <h6 class="my-0"><?php echo $cart['product_name'] ?> (<?php echo $cart['quantity'] ?>)</h6>
-                                            <small class="text-muted"><?php echo $cart['category_name'] ?></small>
+                                            <h6 class="my-0"><?php echo $res['product_name'] ?> (<?php echo $res['quantity'] ?>)</h6>
+                                            <small class="text-muted"><?php echo $res['category_name'] ?></small>
                                         </div>
-                                        <span class="text-muted">₱<?php echo number_format($cart['product_price']) ?></span>
+                                        <span class="text-muted">₱<?php echo number_format($res['product_price']) ?></span>
                                     </li>
                                     <?php
 
@@ -114,7 +143,7 @@ include_once 'templates/navbar.php';
                                 if (isset($_POST['checkout'])) {
                                     ?>
                                     <input type="hidden" name="checkout_products" value="<?php echo implode(',', $_POST['product']);?>">
-                                    <input type="hidden" name="user" value="<?php echo $row['id'] ?>">
+                                    <input type="hidden" name="user" value="<?php echo $user['id'] ?>">
                                     <button class="btn btn-outline-light w-100 text-center mt-3" name="continue_checkout" type="submit">Proceed to checkout</button>
                                     <?php
                                 }
@@ -129,14 +158,14 @@ include_once 'templates/navbar.php';
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="firstName">First name</label>
-                                    <input type="text" class="form-control" id="firstName" placeholder="" value="<?php echo $row['firstname'] ?>" required>
+                                    <input type="text" class="form-control" id="firstName" placeholder="" value="<?php echo $user['firstname'] ?>" required>
                                     <div class="invalid-feedback">
                                         Valid first name is required.
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="lastName">Last name</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder="" value="<?php echo $row['lastname'] ?>" required>
+                                    <input type="text" class="form-control" id="lastName" placeholder="" value="<?php echo $user['lastname'] ?>" required>
                                     <div class="invalid-feedback">
                                         Valid last name is required.
                                     </div>
@@ -149,7 +178,7 @@ include_once 'templates/navbar.php';
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">@</span>
                                     </div>
-                                    <input type="text" class="form-control" id="username" value="<?php echo $row['username'] ?>" placeholder="Username" required>
+                                    <input type="text" class="form-control" id="username" value="<?php echo $user['username'] ?>" placeholder="Username" required>
                                     <div class="invalid-feedback" style="width: 100%;">
                                         Your username is required.
                                     </div>
@@ -166,7 +195,7 @@ include_once 'templates/navbar.php';
 
                             <div class="mb-3">
                                 <label for="address">Address</label>
-                                <input type="text" class="form-control" id="address" placeholder="" value="<?php echo $row['address'] ?>" required>
+                                <input type="text" class="form-control" id="address" placeholder="" value="<?php echo $user['address'] ?>" required>
                                 <div class="invalid-feedback">
                                     Please enter your shipping address.
                                 </div>

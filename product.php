@@ -1,6 +1,7 @@
 <?php
 include_once 'config/init.php';
 $product = new Product();
+$review_object = new Rating();
 
     if (isset($_GET['id'])){
         $product_id = $_GET['id'];
@@ -161,17 +162,26 @@ include_once 'templates/navbar.php';
                             <span>₱<?php echo number_format($res['product_price'])?></span>
                         </div>
                         <div class="row">
-                            <div class="quantity buttons_added" data-trigger="spinner" >
+                            <div class="quantity buttons_added mb-3" data-trigger="spinner" >
                                 <input type="button" value="-" class="minus btn-outline-dark" data-spin="down">
                                 <input type="text" class="input-text qty text" id="quantity_<?= $res['id'] ?>" name="quantity" value="1" title="quantity">
                                 <input type="button" value="+" class="plus" data-spin="up">
                             </div>
-                            <div class="col-md-9">
-                                <button type="button" data-id="<?= $res['id'] ?>"  name="addtocart" id="addtocart" class="btn btn-outline-success flex-shrink-0 addtocart mt-4">
+                            <?php
+                            if ($auth->isLoggedIn()):
+                                ?>
+                                <button name="addtocart" data-id="<?= $row['id'] ?>"  class="btn btn-outline-success add btn-sm addtocart" type="submit">
                                     <i class="fal fa-cart-shopping"></i> Add to Cart
                                 </button>
-
-                            </div>
+                            <?php
+                            else:
+                                ?>
+                                <a class="btn btn-outline-success btn-sm add" href="login.php" type="button">
+                                    <i class="fal fa-cart-shopping"></i> Add to Cart
+                                </a>
+                            <?php
+                            endif;
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -186,16 +196,16 @@ include_once 'templates/navbar.php';
                 <div class="row">
                     <div class="col-sm-4 text-center">
                         <h1 class="text-warning mt-4 mb-4">
-                            <b><span id="average_rating">0.0</span> / 5</b>
+                            <b><span id="average_rating"><?= $review_object->fetchRating($product_id) ?></span> / 5</b>
                         </h1>
                         <div class="mb-3">
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
-                            <i class="fas fa-star star-light mr-1 main_star"></i>
+                            <i class="fas fa-star star-light mr-1 <?= ($review_object->fetchRating($product_id) >= 1) ? 'uwu': '' ?>"></i>
+                            <i class="fas fa-star star-light mr-1 <?= ($review_object->fetchRating($product_id) >= 2) ? 'uwu': '' ?>"></i>
+                            <i class="fas fa-star star-light mr-1 <?= ($review_object->fetchRating($product_id) >= 3) ? 'uwu': '' ?>"></i>
+                            <i class="fas fa-star star-light mr-1 <?= ($review_object->fetchRating($product_id) >= 4) ? 'uwu': '' ?>"></i>
+                            <i class="fas fa-star star-light mr-1 <?= ($review_object->fetchRating($product_id) >= 5) ? 'uwu': '' ?>"></i>
                         </div>
-                        <h3><span id="total_review">0</span> Review</h3>
+                        <h3><span id="total_review"><?= $review_object->countRating($product_id, 0, true) ?></span> Review</h3>
                     </div>
                     <div class="col-sm-4">
 
@@ -205,11 +215,11 @@ include_once 'templates/navbar.php';
                             </div>
                             <div class="col">
                                 <div class="progress">
-                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="five_star_progress"></div>
+                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="five_star_progress"><?=$review_object->percentageRating($product_id, 5); ?></div>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <div class="progress-label-right">(<span id="total_five_star_review">0</span>)</div>
+                                <div class="progress-label-right">(<span id="total_five_star_review"><?=$review_object->countRating($product_id, 5); ?></span>)</div>
                             </div>
                         </div>
                         <div class="row align-items-center">
@@ -218,24 +228,25 @@ include_once 'templates/navbar.php';
                             </div>
                             <div class="col">
                                 <div class="progress">
-                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="five_star_progress"></div>
+                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="five_star_progress"><?=$review_object->percentageRating($product_id, 4); ?></div>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <div class="progress-label-right">(<span id="total_five_star_review">0</span>)</div>
+                                <div class="progress-label-right">(<span id="total_five_star_review"><?=$review_object->countRating($product_id, 3); ?></span>)</div>
                             </div>
                         </div>
+
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <div class="progress-label-left"><b>3</b> <i class="fas fa-star text-warning"></i></div>
                             </div>
                             <div class="col">
                                 <div class="progress">
-                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="five_star_progress"></div>
+                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="five_star_progress"><?=$review_object->percentageRating($product_id, 3); ?></div>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <div class="progress-label-right">(<span id="total_five_star_review">0</span>)</div>
+                                <div class="progress-label-right">(<span id="total_five_star_review"><?=$review_object->countRating($product_id, 3); ?></span>)</div>
                             </div>
                         </div>
                         <div class="row align-items-center">
@@ -244,11 +255,11 @@ include_once 'templates/navbar.php';
                             </div>
                             <div class="col">
                                 <div class="progress">
-                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="five_star_progress"></div>
+                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="five_star_progress"><?=$review_object->percentageRating($product_id, 2); ?></div>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <div class="progress-label-right">(<span id="total_five_star_review">0</span>)</div>
+                                <div class="progress-label-right">(<span id="total_five_star_review"><?=$review_object->countRating($product_id, 2); ?></span>)</div>
                             </div>
                         </div>
                         <div class="row align-items-center">
@@ -257,23 +268,35 @@ include_once 'templates/navbar.php';
                             </div>
                             <div class="col">
                                 <div class="progress">
-                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="five_star_progress"></div>
+                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="five_star_progress"><?=$review_object->percentageRating($product_id, 1); ?></div>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <div class="progress-label-right">(<span id="total_five_star_review">0</span>)</div>
+                                <div class="progress-label-right">(<span id="total_five_star_review"><?=$review_object->countRating($product_id, 1); ?></span>)</div>
                             </div>
                         </div>
 
 
 
                     </div>
+
+                    <?php
+
+                    if($auth->isLoggedIn()):
+                    ?>
+
                     <div class="col-sm-4 text-center">
                         <h3 class="mt-4 mb-3">Write Review Here</h3>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#make_review">
                             Review
                         </button>
                     </div>
+
+                    <?php
+                    endif;
+                    ?>
+
+
                 </div>
             </div>
         </div>
@@ -282,18 +305,21 @@ include_once 'templates/navbar.php';
 <div class="container d-flex justify-content-center align-items-center">
     <div class="row d-flex justify-content-center">
 
+        <h3>Product Reviews</h3>
         <?php
 
 
-            $review_object = new Rating();
             $review = $review_object->fetchReviews($product_id);
 
+            if (!empty($review)):
+
         foreach ($review as $rev):
-            $star_rating = $review_object->fetchRating($rev['product_id']);
+
+            $star_rating = $rev['rating'];
 
             ?>
 
-        <div class="col-md-4">
+        <div class="col-md-3 border m-1">
             <div class="d-flex flex-column mb-3" id="comment-container">
                 <div class="bg-white">
                     <div class="flex-row d-flex">
@@ -303,11 +329,11 @@ include_once 'templates/navbar.php';
                             <span class="date text-black-50"><?= date("F d, Y h:i:s A", strtotime($rev['date_created']))  ?></span>
                             <div class="w-100 d-flex justify-content-center">
                                 <div class="mb-3">
-                                    <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 1) ? '': 'uwu' ?>"></i>
-                                    <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 2) ? '': 'uwu' ?>"></i>
-                                    <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 3) ? '': 'uwu' ?>"></i>
-                                    <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 4) ? '': 'uwu' ?>"></i>
-                                    <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 5) ? '': 'uwu' ?>"></i>
+                                    <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 1) ? 'uwu': '' ?>"></i>
+                                    <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 2) ? 'uwu': '' ?>"></i>
+                                    <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 3) ? 'uwu': '' ?>"></i>
+                                    <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 4) ? 'uwu': '' ?>"></i>
+                                    <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 5) ? 'uwu': '' ?>"></i>
                                 </div>
                             </div>
                         </div>
@@ -323,6 +349,22 @@ include_once 'templates/navbar.php';
         endforeach;
         ?>
 
+        <?php else: ?>
+
+        <div class="col-md-12  m-1">
+            <div class="d-flex flex-column mb-3" id="comment-container">
+                <div class="bg-white ">
+                    <div class="flex-row d-flex align-items-center">
+                        <p>The product has no review yet.</p>
+                    </div>
+                </div>
+            </div>
+
+            <?php
+            endif;
+            ?>
+
+
     </div>
 </div>
     </div>
@@ -336,7 +378,6 @@ include_once 'templates/navbar.php';
                 <?php
                 $category = $res['category_id'];
                 $id = $res['id'];
-                $rating = new Rating();
 
                     $result = $product->relatedProduct($category, $id);
 
@@ -344,7 +385,7 @@ include_once 'templates/navbar.php';
 
                 if (!empty($result)){
                     foreach($result as $row){
-                        $star_rating = $rating->fetchRating($row['id']);
+                        $star_rating = $review_object->fetchRating($row['id']);
                         ?>
                         <div class="col-sm-3 col-6">
                             <div class="card mb-4 product-wap rounded-0">
@@ -363,11 +404,12 @@ include_once 'templates/navbar.php';
                                         </ul>
                                         <div class="w-100 d-flex justify-content-center">
                                             <div class="mb-3">
-                                                <i class="fas fa-star star-light mr-1 <?= ($star_rating == 1) ? 'uwu': '' ?>"></i>
-                                                <i class="fas fa-star star-light mr-1 <?= ($star_rating == 2) ? 'uwu': '' ?>"></i>
-                                                <i class="fas fa-star star-light mr-1 <?= ($star_rating == 3) ? 'uwu': '' ?>"></i>
-                                                <i class="fas fa-star star-light mr-1 <?= ($star_rating == 4) ? 'uwu': '' ?>"></i>
-                                                <i class="fas fa-star star-light mr-1 <?= ($star_rating == 5) ? 'uwu': '' ?>"></i>
+
+                                                <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 1) ? 'uwu': '' ?>"></i>
+                                                <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 2) ? 'uwu': '' ?>"></i>
+                                                <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 3) ? 'uwu': '' ?>"></i>
+                                                <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 4) ? 'uwu': '' ?>"></i>
+                                                <i class="fas fa-star star-light mr-1 <?= ($star_rating >= 5) ? 'uwu': '' ?>"></i>
                                             </div>
                                         </div>
                                         <p class="text-center mb-0 h6">₱ <?= $row['product_price'] ?></a> </p>

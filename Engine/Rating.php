@@ -15,7 +15,7 @@ class Rating
 
         try {
 
-            if ($this->hasReviewed($product_id)){
+            if (!$this->hasReviewed($product_id)){
                 echo "You already reviewed this product";
                 return false;
             }
@@ -75,6 +75,50 @@ class Rating
             }
         }
         
+    }
+
+    public function countRating($product_id, $rating = 0, $overall = false) {
+
+        if (!$overall){
+            $sql = "SELECT COUNT(*) as total FROM `rating` WHERE `product_id` = :pid AND rating = :r";
+        } else {
+            $sql = "SELECT COUNT(*) as total FROM `rating` WHERE `product_id` = :pid";
+        }
+
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':pid', $product_id);
+        if (!$overall){
+            $stmt->bindParam(':r', $rating);
+        }
+        if ($stmt->execute()){
+            $row = $stmt->fetch();
+            echo $row['total'];
+        }
+
+    }
+
+
+    public function percentageRating($product_id, $rating){
+        $sql = "SELECT SUM(rating) as total_rating, COUNT(*) as num_ratings FROM rating WHERE `product_id` = :pid AND rating = :rating";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':pid', $product_id);
+        $stmt->bindParam(':rating', $rating);
+        if ($stmt->execute()){
+            if ($stmt->rowCount() > 0){
+
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($row['num_ratings'] > 0) {
+                    return ($row['total_rating'] / $row['num_ratings']) * 100 ;
+                } else {
+                    return 0;
+                }
+
+            } else {
+                return 0;
+            }
+        }
     }
 
     /**
