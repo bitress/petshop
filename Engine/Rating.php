@@ -15,10 +15,10 @@ class Rating
 
         try {
 
-            if (!$this->hasReviewed($product_id)){
-                echo "You already reviewed this product";
-                return false;
-            }
+//            if (!$this->hasReviewed($product_id)){
+//                echo "You already reviewed this product";
+//                return false;
+//            }
 
             $datetime = date('Y-m-d H:i:s');
 
@@ -139,6 +139,22 @@ class Rating
                 return false;
             }
         }
+
+    }
+
+    public function hasCheckout($cart_id) {
+        $sql = "SELECT * FROM checkout WHERE user_id = :uid AND cart_id = :cid AND status = '2'";
+        $stmt =$this->db->prepare($sql);
+        $stmt->bindParam(':uid',$this->user_id);
+        $stmt->bindParam(':cid',$cart_id);
+        if ($stmt->execute()) {
+
+            if ($stmt->rowCount() > 0) {
+                return true;
+            }
+
+        }
+
 
     }
 

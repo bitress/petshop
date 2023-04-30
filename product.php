@@ -170,8 +170,8 @@ include_once 'templates/navbar.php';
                             <?php
                             if ($auth->isLoggedIn()):
                                 ?>
-                                <button name="addtocart" data-id="<?= $row['id'] ?>"  class="btn btn-outline-success add btn-sm addtocart" type="submit">
-                                    <i class="fal fa-cart-shopping"></i> Add to Cart
+                                <button name="addtocart" data-id="<?= $res['id'] ?>"  class="btn btn-outline-success add btn-sm addtocart" type="submit">
+                                    <i class="fal fa-cart-shopping"></i>
                                 </button>
                             <?php
                             else:
@@ -283,6 +283,7 @@ include_once 'templates/navbar.php';
                     <?php
 
                     if($auth->isLoggedIn()):
+                        if ($review_object->hasReviewed($product_id)):
                     ?>
 
                     <div class="col-sm-4 text-center">
@@ -293,6 +294,7 @@ include_once 'templates/navbar.php';
                     </div>
 
                     <?php
+                    endif;
                     endif;
                     ?>
 
