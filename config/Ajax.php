@@ -13,6 +13,16 @@
                     echo "true";
                 }
             break;
+            case 'userRegister':
+                $auth = new Authentication();
+                $avatar = !empty($_FILES['profile_picture']) ? $_FILES['profile_picture'] : '';
+
+                $res = $auth->userRegister($_POST['firstname'], $_POST['middlename'], $_POST['lastname'], $_POST['username'], $_POST['email'], $_POST['password'], $_POST['confirm_password'], $_POST['address'], $avatar);
+                if ($res === true) {
+                    echo "true";
+                }
+
+                break;
             case 'getCartItems':
                 $cart = new Cart();
                 $cart->fetchMyCart();

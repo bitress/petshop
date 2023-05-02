@@ -18,3 +18,4 @@ if ($auth->isLoggedIn()){
     $user_data = new User();
     $user = $user_data->getData();
 }
+

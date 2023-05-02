@@ -1,5 +1,12 @@
 <?php
 include_once 'config/init.php';
+
+if (!$auth->isLoggedIn()){
+
+    header("Location: index.php");
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
@@ -63,7 +70,7 @@ include_once 'templates/navbar.php';
                                 <tr>
                                     <td>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="product[]" value="<?php echo $cart['cart_id']; ?>" class="custom-control-input">
+                                            <input type="checkbox" name="product[]" value="<?php echo $cart['cart_id']; ?>" class="custom-control-input seee">
                                         </div>
                                     </td>
                                     <!-- image -->
@@ -199,14 +206,36 @@ include_once 'templates/navbar.php';
 <script src="assets/js/notyf.settings.js"></script>
 <script src="assets/js/cart.js"></script>
 <script>
+    $(document).on('click', 'form button[type=submit]', function(e) {
+        var isValid = valthis()
+        if(!isValid) {
+            e.preventDefault(); //prevent the default action
+        }
+    });
+
     function selectAll(source) {
         checkboxes = document.getElementsByName('product[]');
         for(var i=0, n=checkboxes.length;i<n;i++) {
             checkboxes[i].checked = source.checked;
         }
     }
-
     selectAll(this)
+
+    function valthis() {
+        var checkBoxes = document.getElementsByClassName('seee');
+        var isChecked = false;
+        for (var i = 0; i < checkBoxes.length; i++) {
+            if (checkBoxes[i].checked) {
+                isChecked = true;
+            };
+        };
+        if (isChecked) {
+            return true;
+        } else {
+            notyf.error('Please, check at least one product to continue!');
+        }
+    }
+
 
     $(function (){
         $(".update_cart_button").on('click', function(){

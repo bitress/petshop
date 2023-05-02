@@ -12,5 +12,6 @@
     <orderEntry type="library" name="jquery-3.6.3" level="application" />
     <orderEntry type="library" name="@splidejs/splide" level="application" />
     <orderEntry type="library" name="notyf" level="application" />
+    <orderEntry type="library" name="Jquery" level="project" />
   </component>
 </module>

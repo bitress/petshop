@@ -1,15 +1,15 @@
 <?php
 include_once 'config/init.php';
-
 if (!$auth->isLoggedIn()){
 
     header("Location: index.php");
 
 }
 
+
 ?>
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -22,30 +22,8 @@ if (!$auth->isLoggedIn()){
     <link rel="stylesheet" href="assets/css/my-style.css">
     <link rel="stylesheet" href="assets/fontawesome/css/all.css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/css/splide.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 
-    <style>
-        .rating:not(:checked) > input {
-            position: absolute;
-            appearance: none;
-        }
-
-        .rating:not(:checked) > label {
-            float: right;
-            cursor: pointer;
-            font-size: 20px;
-            color: #666;
-        }
-
-        .rating:not(:checked) > label:before {
-            content: '★';
-        }
-
-        .rating > input:checked ~ label {
-            color: #ffa723;
-        }
-    </style>
 </head>
 <body>
 
@@ -54,25 +32,32 @@ if (!$auth->isLoggedIn()){
 include_once 'templates/navbar.php';
 ?>
 
+<div class="container py-5">
+    <div class="row">
 
-
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-
-        <div class="row">
-
-
-            <div class="col-md-12 order-md-1">
-                The product/s will be delivered to your house.
-                <a href="index.php">Continue shopping</a>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center">
+                        <img src="" alt="Admin" class="rounded-circle" width="150">
+                        <div class="mt-3">
+                            <h4>ui ui ui</h4>
+                            <p class="text-secondary mb-1">ui</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-
         </div>
 
-</section>
+    </div>
+</div>
+
+
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/js/splide.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script src="assets/js/jquery.spinner.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>

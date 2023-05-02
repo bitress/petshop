@@ -1,5 +1,12 @@
 <?php
 include_once 'config/init.php';
+
+if (!$auth->isLoggedIn()){
+
+    header("Location: index.php");
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">

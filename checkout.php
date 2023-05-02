@@ -1,6 +1,10 @@
 <?php
 include_once 'config/init.php';
+if (!$auth->isLoggedIn()){
 
+    header("Location: index.php");
+
+}
 
 if (isset($_POST['continue_checkout'])){
 

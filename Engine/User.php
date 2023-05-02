@@ -15,6 +15,7 @@ class User
         $this->user = Session::get("user_id");
     }
 
+
     public function getData()
     {
 

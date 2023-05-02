@@ -1,5 +1,12 @@
 <?php
 include_once 'config/init.php';
+
+if ($auth->isLoggedIn()){
+
+    header("Location: index.php");
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
@@ -28,7 +35,7 @@ include_once 'templates/navbar.php';
 <div class="container">
     <div class="row justify-content-sm-center my-5 py-5">
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="text-center">
                 <img src="logo.png" alt="logo" width="200">
             </div>
@@ -38,14 +45,14 @@ include_once 'templates/navbar.php';
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-8">
 
             <div class="card shadow-lg">
                 <div class="card-body p-5">
                     <h1 class="fs-4 card-title fw-bold mb-4">Rawr Pet Shop</h1>
 
 
-                    <form id="registerForm">
+                    <form id="registerForm" enctype="multipart/form-data">
                         <div class="row">
 
                             <div class="col-md-12">
@@ -55,17 +62,17 @@ include_once 'templates/navbar.php';
 
                             <div class="col-md-4">
                                 <label class="mb-2 text-muted" for="username">First Name</label>
-                                <input id="username" type="text" class="form-control" name="firstname" value="" required autofocus>
+                                <input id="firstname" type="text" class="form-control" name="firstname" value="" required autofocus>
                             </div>
 
                             <div class="col-md-4">
                                 <label class="mb-2 text-muted" for="username">Middle Name</label>
-                                <input id="username" type="text" class="form-control" name="middlename" value="" required autofocus>
+                                <input id="middlename" type="text" class="form-control" name="middlename" value="" required autofocus>
                             </div>
 
                             <div class="col-md-4">
                                 <label class="mb-2 text-muted" for="username">Last Name</label>
-                                <input id="username" type="text" class="form-control" name="lastname" value="" required autofocus>
+                                <input id="lastname" type="text" class="form-control" name="lastname" value="" required autofocus>
                             </div>
 
                         </div>
@@ -73,12 +80,17 @@ include_once 'templates/navbar.php';
 
                         <div class="mb-3">
                             <label class="mb-2 text-muted" for="username">Address</label>
-                            <input id="username" type="text" class="form-control" name="address" value="" required autofocus>
+                            <input id="address" type="text" class="form-control" name="address" value="" required autofocus>
                         </div>
 
                         <div class="mb-3">
                             <label class="mb-2 text-muted" for="username">Username</label>
                             <input id="username" type="text" class="form-control" name="username" value="" required autofocus>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="mb-2 text-muted" for="username">Email</label>
+                            <input id="email" type="email" class="form-control" name="email" value="" required autofocus>
                         </div>
 
                         <div class="mb-3">
@@ -101,7 +113,7 @@ include_once 'templates/navbar.php';
                         </p>
 
                         <div class="d-flex align-items-center">
-                            <button type="submit" name="submit" class="btn btn-primary ms-auto">
+                            <button type="button" id="register_btn" name="submit" class="btn btn-primary ms-auto">
                                 Register
                             </button>
                         </div>
@@ -127,42 +139,10 @@ include_once 'templates/navbar.php';
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
 <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script src="assets/js/jquery.spinner.min.js"></script>
-<script src="assets/js/navigation.js"></script>
+<script src="assets/js/sha256.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-<script>
-
-    $(function (){
-        $("#registerForm").on('submit', function (e) {
-            e.preventDefault();
-
-            let username = $("#username").val();
-            let password = $("#password").val();
-
-            $.ajax({
-                type: 'POST',
-                url: 'config/Ajax.php',
-                data: {
-                    action: 'userLogin',
-                    username: username,
-                    password: password
-                }, success: function (res){
-
-                    if (res === "true"){
-                        loadHomePage();
-                        console.log(res)
-                    } else {
-                        alertify.error(res)
-                    }
-
-
-                }
-            })
-
-        })
-
-    });
-
-</script>
+<script src="assets/js/notyf.settings.js"></script>
+<script src="assets/js/register.js"></script>
 
 </body>
 </html>
