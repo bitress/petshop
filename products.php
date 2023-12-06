@@ -143,9 +143,9 @@ include_once 'templates/navbar.php';
 
                     <form method="post">
                         <div class="card-body">
-                            <span class="h6"><a href="#" class="text-decoration-none"><?= $row['product_name'] ?></a> </span>
+                            <span class="h6"><a href="product.php?id=<?= $row['id'] ?>" class="text-decoration-none"><?= $row['product_name'] ?></a> </span>
                             <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li class="fw-light"><a href="#"><?= $row['category_name'] ?></a> </li>
+                                <li class="fw-light"><a href="category.php?name=<?= $row['category_name'] ?>"><?= $row['category_name'] ?></a> </li>
                             </ul>
                             <div class="w-100 d-flex justify-content-center">
                                 <div class="rating">

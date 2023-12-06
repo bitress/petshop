@@ -1,9 +1,7 @@
 <?php
 include_once 'config/init.php';
 if (!$auth->isLoggedIn()){
-
     header("Location: index.php");
-
 }
 
 
@@ -39,14 +37,42 @@ include_once 'templates/navbar.php';
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-column align-items-center text-center">
-                        <img src="" alt="Admin" class="rounded-circle" width="150">
+                        <img src="assets/images/pfp/<?= $user['profile_picture'] ?>" alt="Admin" class="rounded-circle" width="150" height="150">
                         <div class="mt-3">
-                            <h4>ui ui ui</h4>
-                            <p class="text-secondary mb-1">ui</p>
+                            <h4><?= htmlentities($user['firstname'] . ' ' . $user['middlename'] . ' '. $user['lastname']) ?></h4>
+                            <p class="text-secondary mb-1">@<?= htmlentities($user['username']) ?></p>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="col-md-8">
+
+            <div class="card">
+                <div class="card-body">
+
+                    <h3>My Orders</h3>
+
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Pending</button>
+                            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Out of Delivery</button>
+                            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Delivered</button>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+
         </div>
 
     </div>

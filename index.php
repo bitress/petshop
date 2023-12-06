@@ -63,45 +63,14 @@
         </div>
 
 
+        <?php
 
-        <div class="col-12 ">
-            <div class=" lh-1 fs-1 text-center mb-2 p-2">
-                <h3 class="text-center">Categories</h3>
-            </div>
+            include_once 'templates/category.php';
 
-            <div class="row g-0">
-                <div class="splide">
-                    <div class="splide__track">
-                        <div class="splide__list">
+        ?>
 
-                            <?php
 
-                            $category = new Category();
-                            $cat = $category->fetchAllCategory();
 
-                            foreach ($cat as $c) {
-
-                                ?>
-
-                                <div class="col-sm-2 splide__slide m-2">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <img src="assets/images/category/<?php echo $c['category_image'] ?>" width="100px" class="float-end">
-                                            <h5 class="card-title"><?php echo $c['category_name'] ?></h5>
-                                            <a class="btn btn-outline btn-sm" href="#">Show Products</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <?php
-                            }
-                            ?>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="row g-0">
@@ -149,7 +118,7 @@
                        <div class="card-body">
                             <span class="h6"><a href="product.php?id=<?= $row['id'] ?>" class="text-decoration-none"><?= $row['product_name'] ?></a> </span>
                             <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li class="fw-light"><a href="#"><?= $row['category_name'] ?></a> </li>
+                                <li class="fw-light"><a href="category.php?name=<?= $row['category_name'] ?>"><?= $row['category_name'] ?></a> </li>
                             </ul>
                             <div class="w-100 d-flex justify-content-center">
                                 <div class="rating">

@@ -84,7 +84,29 @@ $cart = new Cart();
                     <li class="nav-item">
                         <div class="dropdown dropstart">
                             <button class="btn btn-outline btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" >
-                                <i class="fal fa-message"></i>
+                                <i class="fal fa-bell"></i>
+                                <span class="badge bg-dark text-white ms-1 rounded-pill">1</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                <div class="shopping-cart active">
+                                    <div class="shopping-cart-header">
+                                        Notifications
+                                    </div>
+                                    <ul class="list-group bg-light">
+
+                                        <a href="#" class="list-group-item list-group-item-action">dfsfsd</a>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <div class="dropdown dropstart">
+                            <button class="btn btn-outline btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" >
+                                <i class="fal fa-comment"></i>
                                 <span class="badge bg-dark text-white ms-1 rounded-pill">1</span>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

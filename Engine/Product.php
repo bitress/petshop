@@ -52,5 +52,14 @@ class Product
         }
 
     }
+    public function fetchByCategory($name){
+            $sql = "SELECT * FROM products LEFT JOIN category ON category.category_id = products.category WHERE category_name = :cat_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':cat_id', $name);
+        if ($stmt->execute()) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+    }
 
 }
