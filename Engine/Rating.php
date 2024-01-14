@@ -1,9 +1,10 @@
 <?php
 
-class Rating
+#[AllowDynamicProperties] class Rating
 {
 
     private Database $db;
+    private $user_id;
 
     public function __construct(){
         $this->db = Database::getInstance();
@@ -133,7 +134,7 @@ class Rating
         $stmt->bindParam(':id', $this->user, PDO::PARAM_INT);
         $stmt->bindParam(':pid', $product_id, PDO::PARAM_INT);
         if ($stmt->execute()){
-            if ($stmt->rowCount() > 0){
+            if ($stmt->rowCount() > 1){
                 return true;
             } else {
                 return false;
@@ -143,19 +144,27 @@ class Rating
     }
 
     public function hasCheckout($cart_id) {
-        $sql = "SELECT * FROM checkout WHERE user_id = :uid AND cart_id = :cid AND status = '2'";
-        $stmt =$this->db->prepare($sql);
-        $stmt->bindParam(':uid',$this->user_id);
-        $stmt->bindParam(':cid',$cart_id);
-        if ($stmt->execute()) {
+        try {
+            $sql = "SELECT * FROM checkout 
+        INNER JOIN cart ON cart.cart_id = checkout.cart_id 
+        INNER JOIN products ON cart.product_id = products.id
+        WHERE checkout.user_id = :uid AND cart.product_id = :cid AND checkout.status = '2'";
 
-            if ($stmt->rowCount() > 0) {
-                return true;
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':uid', $this->user, PDO::PARAM_INT);
+            $stmt->bindParam(':cid', $cart_id, PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                if($stmt->rowCount() > 0){
+                    return true;
+                }
+            } else {
+                return false;
             }
-
+        } catch (PDOException $e) {
+            return false;
         }
-
-
     }
 
 }

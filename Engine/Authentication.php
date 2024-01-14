@@ -64,6 +64,7 @@ class Authentication
                     if ($this->verifyPassword($password, $hashed_password)) {
                         Session::set('isLoggedIn', true);
                         Session::set('user_id', $user_id);
+
                         return true;
                     } else {
                         echo "The password you have entered is incorrect";

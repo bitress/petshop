@@ -1,6 +1,7 @@
 $(function() {
 
 
+
     // ADD TO CART FUNCTIONS
 
         $(".addtocart").on("click", function(e) {

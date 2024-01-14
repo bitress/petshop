@@ -204,7 +204,7 @@ include_once 'templates/navbar.php';
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
 <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script src="assets/js/jquery.spinner.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/no    tyf@3/notyf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="assets/js/notyf.settings.js"></script>
 <script src="assets/js/cart.js"></script>
 <script>

@@ -167,23 +167,23 @@ include_once 'templates/navbar.php';
 
                     </div>
 
-                    <?php
 
-                    if($auth->isLoggedIn()):
-                        if ($review_object->hasReviewed($product_id)):
-                    ?>
+                    <?php if ($auth->isLoggedIn()): ?>
+                        <?php if ($review_object->hasCheckout($product_id)): ?>
+                            <div class="col-sm-4 text-center">
+                                <h3 class="mt-4 mb-3">Write Review Here</h3>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#make_review">
+                                    Review
+                                </button>
+                            </div>
 
-                    <div class="col-sm-4 text-center">
-                        <h3 class="mt-4 mb-3">Write Review Here</h3>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#make_review">
-                            Review
-                        </button>
-                    </div>
 
-                    <?php
-                    endif;
-                    endif;
-                    ?>
+                    <?php  endif;  else: ?>
+                        <div class="col-sm-4 text-center">
+                            <p>User is not logged in</p>
+                        </div>
+                    <?php endif; ?>
+
 
 
                 </div>
